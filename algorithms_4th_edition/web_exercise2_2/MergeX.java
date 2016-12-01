@@ -23,7 +23,7 @@ public class MergeX {
             if      (i > mid)             dst[k] = src[j++];
             else if (j > hi)              dst[k] = src[i++];
             else if (less(src[j], src[i])) dst[k] = src[j++];   // to ensure stability
-			else                          dst[k] = src[i++];
+	    else                          dst[k] = src[i++];
         }
         // postcondition: dst[lo .. hi] is sorted subarray
         assert isSorted(dst, lo, hi);
@@ -53,7 +53,7 @@ public class MergeX {
     }
 
     public static void sort(Comparable[] a) {
-        Comparable[] aux = a.clone();
+        Comparable[] aux = a.clone(); //不将元素复制到辅助数组，sort()会多一个数组的参数
         sort(aux, a, 0, a.length - 1);
         assert isSorted(a);
     }
@@ -92,10 +92,10 @@ public class MergeX {
 
         int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++) {
-            if (i > mid) dst[k] = src[j++];
-            else if (j > hi) dst[k] = src[i++];
+            if      (i > mid)                         dst[k] = src[j++];
+            else if (j > hi)                          dst[k] = src[i++];
             else if (less(src[j], src[i],comparator)) dst[k] = src[j++];
-            else dst[k] = src[i++];
+            else                                      dst[k] = src[i++];
         }
         // postcondition: dst[lo .. hi] is sorted subarray
         assert isSorted(dst, lo, hi, comparator);
