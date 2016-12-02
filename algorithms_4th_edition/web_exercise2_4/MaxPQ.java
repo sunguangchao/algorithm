@@ -9,8 +9,8 @@ import java.util.NoSuchElementException;
  * Created by 11981 on 2016/12/1.
  */
 public class MaxPQ<Key> implements Iterable<Key>{
-    private Key[] pq;
-    private int n;
+    private Key[] pq; //基于堆的完全二叉树
+    private int n; //存储于pq[1...n]中，pq[0]没有使用
     private Comparator<Key> comparator;
 
     public MaxPQ(int initCapacity){
@@ -74,10 +74,10 @@ public class MaxPQ<Key> implements Iterable<Key>{
 
     public Key delMax(){
         if(isEmpty()) throw new NoSuchElementException("Priority queue underflow");
-        Key max = pq[1];
-        exch(1, n--);
-        sink(1);
-        pq[n+1] = null; // to avoid loiterig and help with garbage collection
+        Key max = pq[1]; //从根节点得到最大元素
+        exch(1, n--);    //将其和最后一个结点交换
+        sink(1);         //恢复堆的有序性
+        pq[n+1] = null;  // to avoid loiterig and help with garbage collection
         if((n>0) && (n==(pq.length - 1)/4)) resize(pq.length / 2);
         assert isMaxHeap();
         return max;
