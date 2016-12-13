@@ -53,7 +53,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         if(key == null) throw new IllegalArgumentException("argument to get() is null");
         return get(root, key);
     }
-
+    //这里直接用标准二叉树的查找方法
     private Value get(Node x, Key key)
     {
         while (x != null)
@@ -73,6 +73,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
 
     public void put(Key key, Value val)
     {
+        //查找key，找到则更新其值，否则为它新建一个结点
         if(key == null) throw new IllegalArgumentException("first argument to put() is null");
         if (val == null){
             delete(key);
@@ -84,12 +85,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
     }
     private Node put(Node h,Key key,Value val)
     {
+        //标准的插入操作，和父结点用红链接相连
         if(h == null)return new Node(key, val, RED, 1);
         int cmp = key.compareTo(h.key);
         if     (cmp < 0)    h.left = put(h.left, key, val);
         else if(cmp > 0)    h.right = put(h.right, key, val);
         else h.val = val;
 
+        //保证树的有序性和完美平衡性
         if(isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);//如果右节点是红色而左结点是黑色，进行左旋转
         if(isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);//如果左子结点是红色的且它的左子结点也是红色的，进行右旋转
         if(isRed(h.left) && isRed(h.right)) flipColors(h);//如果左右子结点均为红色，进行颜色转换
@@ -202,6 +205,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         h.right.color = !h.right.color;
     }
 
+    //颜色转换
     private Node moveRedLeft(Node h)
     {
         flipColors(h);
