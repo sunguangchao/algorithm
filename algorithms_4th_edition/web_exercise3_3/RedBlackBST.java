@@ -29,9 +29,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
             this.size = size;
         }
     }
-    public RedBlackBST(){
-
-    }
+    public RedBlackBST(){}
 
     private boolean isRed(Node x){
         if(x == null) return false;
