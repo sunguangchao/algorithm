@@ -14,7 +14,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
     private static final boolean RED = true;
     private static final boolean BLACK = false;
     private Node root;
-    private class Node//��color������Node����
+    private class Node//º¬color±äÁ¿µÄNode¶ÔÏó
     {
         private Key key;
         private Value val;
@@ -92,9 +92,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         else if(cmp > 0)    h.right = put(h.right, key, val);
         else h.val = val;
 
-        if(isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
-        if(isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
-        if(isRed(h.left) && isRed(h.right)) flipColors(h);
+        if(isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);//如果右节点是红色而左结点是黑色，进行左旋转
+        if(isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);//如果左子结点是红色的且它的左子结点也是红色的，进行右旋转
+        if(isRed(h.left) && isRed(h.right)) flipColors(h);//如果左右子结点均为红色，进行颜色转换
         h.size = size(h.left) + size(h.right) + 1;
 
         return h;
