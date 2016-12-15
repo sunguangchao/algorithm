@@ -328,7 +328,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         if(x == null)return 0;
         int cmp = key.compareTo(x.key);
         if(cmp < 0) return rank(key,x.left);
-        else if(cmp > 0)return 1 + size(x.left) + rank(key,x.left);
+        else if(cmp > 0)return 1 + size(x.left) + rank(key,x.right);
         else return size(x.left);
     }
 
@@ -434,9 +434,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
 
     public static void main(String[] args)
     {
+        In in = new In(args[0]);
         RedBlackBST<String, Integer> st = new RedBlackBST<String,Integer>();
-        for(int i=0; !StdIn.isEmpty();i++){
-            String key = StdIn.readString();
+        for(int i=0; !in.isEmpty();i++){
+            String key = in.readString();
             st.put(key, i);
         }
         for (String s : st.keys())
