@@ -61,8 +61,8 @@ public class BST<Key extends Comparable<Key>,Value> {
     private Node put(Node x,Key key, Value val){
         if (x == null)return  new Node(key,val,1);
         int cmp = key.compareTo(x.key);
-        if      (cmp < 0) x.left = put(x.left,key,val);
-        else if (cmp > 0) x.right = put(x.right,key,val);
+        if      (cmp < 0) x.left = put(x.left,key,val);//如果被查找的键小于根结点的键，在左子树插入
+        else if (cmp > 0) x.right = put(x.right,key,val);//否则在右子树插入
         else              x.val = val;
         x.size = 1 + size(x.left) + size(x.right);
         return x;
@@ -119,8 +119,8 @@ public class BST<Key extends Comparable<Key>,Value> {
     }
 
     private Node min(Node x){
-        if (x.left == null) return x;
-        else return min(x.left);
+        if (x.left == null) return x;//根结点的左链接为空，最小键就是根结点
+        else return min(x.left);     //左链接非空，最小键就是左子树中的最小键
     }
     public Key max(){
         if (isEmpty()) throw new NoSuchElementException("called min() with empty symbol table");
@@ -130,7 +130,7 @@ public class BST<Key extends Comparable<Key>,Value> {
         if (x.right == null) return x;
         else return max(x.right);
     }
-    public Key floor(Key key){
+    public Key floor(Key key){//小于等于key的最大键
         if (key == null) throw new IllegalArgumentException("argument to floor() is null");
         if (isEmpty()) throw new NoSuchElementException("called floor() with empty symbol table");
         Node x = floor(root,key);
