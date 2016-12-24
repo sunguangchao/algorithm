@@ -75,7 +75,7 @@ public class BST<Key extends Comparable<Key>,Value> {
     }
     private Node deleteMin(Node x){
         if (x.left == null) return x.right;
-        x.left = deleteMin(x.left);
+        x.left = deleteMin(x.left); //深入根结点的左子树直到找到一个空链接，然后将指向该结点的链接指向右子树
         x.size = size(x.left)+ size(x.right) + 1;
         return x;
     }
@@ -105,10 +105,10 @@ public class BST<Key extends Comparable<Key>,Value> {
          else{
              if (x.right == null) return x.left;
              if (x.left == null) return x.right;
-             Node t = x;
-             x = min(t.right);
-             x.right = deleteMin(t.right);
-             x.left = t.left;
+             Node t = x;                    //将指向即将被删除的结点的链接保存为t
+             x = min(t.right);              //将x指向它的后继结点min(t.right)
+             x.right = deleteMin(t.right);  //将x的右链接指向deleteMin(t.right)，也就是在删除后所有的结点仍然大于x.key的子二叉查找树
+             x.left = t.left;               //将x的左链接设为t.left
          }
          x.size = size(x.left) + size(x.right) + 1;
          return x;
@@ -141,9 +141,9 @@ public class BST<Key extends Comparable<Key>,Value> {
         if (x == null) return  null;
         int cmp = key.compareTo(x.key);
         if (cmp == 0) return x;
-        if (cmp < 0) return floor(x.left, key);
+        if (cmp < 0)  return floor(x.left, key); //如果给定的键小于根结点，那么floor(key)一定在左子树中
         Node t = floor(x.right, key);
-        if (t != null)return t;
+        if (t != null) return t;   //如果大于根结点，可能在右子树中，也可能是根节点
         else return x;
     }
 
@@ -155,14 +155,14 @@ public class BST<Key extends Comparable<Key>,Value> {
         else return x.key;
 
     }
-    private Node ceiling(Node x,Key key){
+    private Node ceiling(Node x,Key key){//大于等于key的最小键
         if (x == null) return null;
         int cmp = key.compareTo(x.key);
         if (cmp == 0)return x;
-        if (cmp < 0){
+        if (cmp < 0){                      //给定的key小于根结点，要看根结点左子树中有没有大于等于key的结点
             Node t = ceiling(x.left,key);
-            if (t != null) return t;
-            else return x;
+            if (t != null) return t;       //如果有，就存在于此结点的左子树中
+            else return x;                 //如果没有，ceiling(key)就等于根结点
         }
         return ceiling(x.right,key);
     }
@@ -174,9 +174,9 @@ public class BST<Key extends Comparable<Key>,Value> {
     }
     private Node select(Node x, int k){
         if (x == null)return null;
-        int t = size(x.left);
+        int t = size(x.left); //左子树中的结点数
         if      (t > k) return select(x.left, k);
-        else if (t < k) return select(x.right, k-t-1);
+        else if (t < k) return select(x.right, k-t-1);//递归地在右子树中查找排名为(k-t-1)的键，1代表根结点
         else return x;
     }
     public int rank(Key key){
@@ -186,12 +186,12 @@ public class BST<Key extends Comparable<Key>,Value> {
     private int rank(Key key, Node x){
         if (x == null)    return 0;
         int cmp = key.compareTo(x.key);
-        if (cmp < 0)      return rank(key, x.left);
+        if      (cmp < 0) return rank(key, x.left);
         else if (cmp > 0) return 1+size(x.left)+rank(key, x.right);
         else              return size(x.left);
     }
 
-    public Iterable<Key> keys(){
+    public Iterable<Key> keys(){//范围查找
         return keys(min(), max());
     }
     public Iterable<Key> keys(Key lo,Key hi){
