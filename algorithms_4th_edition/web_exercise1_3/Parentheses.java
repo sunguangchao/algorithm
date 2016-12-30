@@ -17,7 +17,7 @@ public class Parentheses {
         Stack<Character> charater = new Stack<Character>();
         for(int i=0;i<s.length();i++){
             if(s.charAt(i) == LEFT_PAREN) charater.push(LEFT_PAREN);
-            //charAt():·µ»ØÖ¸¶¨Ë÷ÒýÎ»ÖÃµÄcharÖµ
+            //charAt():è¿”å›žæŒ‡å®šç´¢å¼•ä½ç½®çš„charå€¼
             if(s.charAt(i) == LEFT_BRACE) charater.push(LEFT_BRACE);
             if(s.charAt(i) == LEFT_BRACKET) charater.push(LEFT_BRACKET);
             if(s.charAt(i) == RIGHT_PAREN){
@@ -26,7 +26,7 @@ public class Parentheses {
             }
             if(s.charAt(i) == RIGHT_BRACE){
                 if(charater.isEmpty()) return false;
-                if(charater.pop() != LEFT_PAREN) return false;
+                if(charater.pop() != LEFT_BRACE) return false;
             }
             if(s.charAt(i) == RIGHT_BRACKET){
                 if(charater.isEmpty())return false;
@@ -38,7 +38,7 @@ public class Parentheses {
     }
     public static void main(String[] args){
         In in = new In(args[0]);
-        String s = in.readString();//trim():È¥³ý×Ö·û´®Á½¶ËµÄ¿Õ¸ñ
+        String s = in.readString();//trim():åŽ»é™¤å­—ç¬¦ä¸²ä¸¤ç«¯çš„ç©ºæ ¼
         StdOut.println(isBalance(s));
     }
 
