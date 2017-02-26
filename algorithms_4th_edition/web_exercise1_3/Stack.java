@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 public class Stack<Item> implements Iterable<Item> {
     private Node<Item> first;
     private int N;
-    private static class Node<Item>
+    private static class Node<Item>   //定义结点的抽象类型
     {
         private Item item;
         private Node<Item> next;
@@ -25,7 +25,7 @@ public class Stack<Item> implements Iterable<Item> {
     public int size(){
         return N;
     }
-    public void push(Item item){
+    public void push(Item item){   //相当于在链表头插入结点
         Node<Item> oldfirst = first;
         first = new Node<Item>();
         first.item = item;
@@ -33,7 +33,7 @@ public class Stack<Item> implements Iterable<Item> {
         N++;
 
     }
-    public Item pop(){//删除链表的首结点
+    public Item pop(){   //相当于删除链表的首结点
         if(isEmpty()) throw new NoSuchElementException("Stack underflow");
         Item item = first.item;
         first = first.next;
@@ -57,6 +57,7 @@ public class Stack<Item> implements Iterable<Item> {
 
 
     // an iterator, doesn't implement remove() since it's optional
+	//实现迭代
     private class ListIterator<Item> implements Iterator<Item> {
         private Node<Item> current;
 

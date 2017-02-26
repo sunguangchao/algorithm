@@ -44,7 +44,7 @@ public class Queue<Item> implements Iterable<Item> {
         last = new Node<Item>();
         last.item = item;
         last.next = null;
-        if (isEmpty()) first = last;
+        if (isEmpty()) first = last; //加的这个判断要注意下
         else           oldlast.next = last;
         N++;
     }

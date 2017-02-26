@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * Created by 11981 on 2016/11/17.
  */
 public class ResizingArrayStack<Item> implements Iterable<Item> {
-   private Item[] a;
+   private Item[] a;  //栈元素
     private int n;
     public ResizingArrayStack(){
         a= (Item[])new Object[2];
@@ -24,7 +24,7 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
        //将栈移动到一个大小为capacity的新数组
         assert capacity >= 0;
         Item[] temp = (Item[])new Object[capacity];
-        for(int i = 0;i<n;i++){
+        for(int i = 0; i < n; i++){
             temp[i] = a[i];
         }
         a = temp;
@@ -48,7 +48,7 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
         if(isEmpty()) throw new NoSuchElementException("Stack underflow");
         return a[n-1];
     }
-    public Iterator<Item> iterator(){
+    public Iterator<Item> iterator(){    //参考P87是如何实现迭代的
         return new ReverseArrayIterator();
     }
     private class ReverseArrayIterator implements Iterator<Item>{

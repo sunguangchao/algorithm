@@ -35,7 +35,7 @@ public class Bag<Item> implements Iterable<Item> {
         return new ListIterator<Item>(first);
     }
     private class ListIterator<Item> implements Iterator<Item>{
-        private Node<Item> current;//¼ÇÂ¼Á´±íµÄµ±Ç°½áµã
+        private Node<Item> current;   //è®°å½•é“¾è¡¨çš„å½“å‰ç»“ç‚¹
         public ListIterator(Node<Item> first){
             current = first;
         }
