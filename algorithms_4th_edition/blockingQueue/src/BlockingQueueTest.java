@@ -6,6 +6,8 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by 11981 on 2016/9/4.
+ * Core Java P667
+ * 使用阻塞队列来控制一组线程，程序在一个目录及其子目录下搜索所有文件，打印包含指定关键字的行
  */
 public class BlockingQueueTest {
     public static void main(String[] args) {
@@ -17,6 +19,7 @@ public class BlockingQueueTest {
         String keyword = in.nextLine();
         final int FILE_QUEUE_SIZE = 10;
         final int SEARCH_THREADS = 100;
+        //构造一个带指定容量和公平设置的阻塞队列
         BlockingQueue<File> queue = new ArrayBlockingQueue<>(FILE_QUEUE_SIZE);
 
         FileEnumerationTask enumerator = new FileEnumerationTask(queue,new File(directory));
@@ -35,7 +38,7 @@ public class BlockingQueueTest {
 
         public FileEnumerationTask(BlockingQueue<File> queue, File startingDirectory)
         {
-            this.queue =queue;
+            this.queue = queue;
             this.startingDirectory = startingDirectory;
         }
         public void run()
