@@ -8,11 +8,11 @@ import java.util.NoSuchElementException;
  * Created by 11981 on 2016/11/17.
  */
 public class ResizingArrayStack<Item> implements Iterable<Item> {
-   private Item[] a;  //栈元素
+    private Item[] a;  //栈元素
     private int n;
     public ResizingArrayStack(){
-        a= (Item[])new Object[2];
-        n  = 0;
+        a = (Item[])new Object[2];
+        n = 0;
     }
     public boolean isEmpty(){
         return n == 0;
