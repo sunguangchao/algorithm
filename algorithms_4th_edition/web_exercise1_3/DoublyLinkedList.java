@@ -4,9 +4,32 @@ import edu.princeton.cs.algs4.StdRandom;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-/**
- * Created by 11981 on 2017/2/28.
- */
+/******************************************************************************
+ *  使用说明，不代表实际运行结果
+ *  Compilation:  javac DoublyLinkedList.java
+ *  Execution:    java DoublyLinkedList
+ *  Dependencies: StdOut.java
+ *
+ *  A list implemented with a doubly linked list. The elements are stored
+ *  (and iterated over) in the same order that they are inserted.
+ *
+ *  % java DoublyLinkedList 10
+ *  10 random integers between 0 and 99
+ *  24 65 2 39 86 24 50 47 13 4
+ *
+ *  add 1 to each element via next() and set()
+ *  25 66 3 40 87 25 51 48 14 5
+ *
+ *  multiply each element by 3 via previous() and set()
+ *  75 198 9 120 261 75 153 144 42 15
+ *
+ *  remove elements that are a multiple of 4 via next() and remove()
+ *  75 198 9 261 75 153 42 15
+ *
+ *  remove elements that are even via previous() and remove()
+ *  75 9 261 75 153 15
+ *
+ ******************************************************************************/
 public class DoublyLinkedList<Item> implements Iterable<Item> {
     private int n;
     private Node pre;
@@ -25,9 +48,16 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         private Node prev;
     }
 
-    public boolean isEmpty(){return n == 0;}
-    public int size() {return n;}
+    public boolean isEmpty(){
+        return n == 0;
+    }
 
+    public int size(){
+        return n;
+    }
+
+
+    //last存放post之前的节点，将x作为新节点插入
     public void add(Item item){
         Node last = post.prev;
         Node x = new Node();
@@ -39,67 +69,57 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         n++;
     }
 
-    public ListIterator<Item> iterator() {return new DoublyLinkedListIterator();}
-
-    private class DoublyLinkedListIterator implements ListIterator<Item> {
+    public ListIterator<Item> iterator(){
+        return new DoublyLinkedListIterator();
+    }
+    private class DoublyLinkedListIterator implements ListIterator<Item>{
         private Node current = pre.next;
-        private Node lastAccessd = null;
+        private Node lastAccessed = null;
         private int index = 0;
+        public boolean hasNext(){return index < n;}
+        public boolean hasPrevious(){return index > 0;}
+        public int previousIndex(){return index - 1;}
+        public int nextIndex(){return index;}
 
-        public boolean hasNext() {
-            return index < n;
-        }
-
-        public boolean hasPrevious() {
-            return index > 0;
-        }
-
-
-        public int previousIndex() {
-            return index - 1;
-        }
-
-        public int nextIndex() {
-            return index;
-        }
-
-        public Item next() {
+        public Item next(){
             if (!hasNext()) throw new NoSuchElementException();
-            lastAccessd = current;
+            lastAccessed  = current;
             Item item = current.item;
             current = current.next;
             index++;
             return item;
         }
 
-        public Item previous() {
+        public Item previous(){
             if (!hasPrevious()) throw new NoSuchElementException();
             current = current.prev;
             index--;
-            lastAccessd = current;
+            lastAccessed = current;
             return current.item;
         }
 
-        public void set(Item item) {
-            if (lastAccessd == null) throw new IllegalStateException();
-            lastAccessd.item = item;
+        // replace the item of the element that was last accessed by next() or previous()
+        // condition: no calls to remove() or add() after last call to next() or previous()
+        public void set(Item item){
+            if (lastAccessed == null) throw new IllegalStateException();
+            lastAccessed.item = item;
         }
 
-        public void remove() {
-            if (lastAccessd == null) throw new IllegalStateException();
-            Node x = lastAccessd.prev;
-            Node y = lastAccessd.next;
+        public void remove(){
+            if (lastAccessed == null) throw new IllegalStateException();
+            Node x = lastAccessed.prev;
+            Node y = lastAccessed.next;
             x.next = y;
             y.prev = x;
             n--;
-            if (current == lastAccessd)
+            if (current == lastAccessed)
                 current = y;
             else
                 index--;
-            lastAccessd = null;
+            lastAccessed = null;
         }
 
-        public void add(Item item) {
+        public void add(Item item){
             Node x = current.prev;
             Node y = new Node();
             Node z = current;
@@ -110,9 +130,10 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
             y.prev = x;
             n++;
             index++;
-            lastAccessd = null;
+            lastAccessed = null;
         }
     }
+
     public String toString(){
         StringBuilder s = new StringBuilder();
         for (Item item : this)
@@ -122,19 +143,17 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
 
     public static void main(String[] args){
         int n = Integer.parseInt(args[0]);
-        // add elements 1, ..., n
         StdOut.println(n + " random integers between 0 and 99");
         DoublyLinkedList<Integer> list = new DoublyLinkedList<Integer>();
-        for (int i = 0; i < n; i++)
+        for (int i=0; i < n; i++)
             list.add(StdRandom.uniform(100));
         StdOut.println(list);
         StdOut.println();
 
         ListIterator<Integer> iterator = list.iterator();
-
         // go forwards with next() and set()
         StdOut.println("add 1 to each element via next() and set()");
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()){
             int x = iterator.next();
             iterator.set(x + 1);
         }
@@ -143,14 +162,12 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
 
         // go backwards with previous() and set()
         StdOut.println("multiply each element by 3 via previous() and set()");
-        while (iterator.hasPrevious()) {
+        while (iterator.hasPrevious()){
             int x = iterator.previous();
             iterator.set(x + x + x);
         }
         StdOut.println(list);
         StdOut.println();
-
-
         // remove all elements that are multiples of 4 via next() and remove()
         StdOut.println("remove elements that are a multiple of 4 via next() and remove()");
         while (iterator.hasNext()) {
@@ -189,9 +206,5 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         }
         StdOut.println(list);
         StdOut.println();
-
     }
-
-
-
 }

@@ -1,24 +1,21 @@
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Stack;
-import edu.princeton.cs.algs4.StdOut;
+import java.util.Scanner;
 
 /**
- * Created by 11981 on 2016/11/20.
- * web exercise 1.3_5
+ * Created by 11981 on 2017/4/6.
+ * 十进制转二进制
+ * 如，50转为二进制为110010
  */
 public class TenTransferTwo {
     public static void main(String[] args){
-        Stack<Integer> s = new Stack<Integer>();
-        In in = new In(args[0]);
-        int n = in.readInt();
+        Stack<Integer> stack = new Stack<>();
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
         while (n > 0){
-            s.push(n%2);
+            stack.push(n%2);
             n = n/2;
         }
-        while (!s.isEmpty()){
-            StdOut.print(s.pop());
+        while (!stack.isEmpty()){
+            System.out.print(stack.pop());
         }
-        StdOut.println();
-
     }
 }

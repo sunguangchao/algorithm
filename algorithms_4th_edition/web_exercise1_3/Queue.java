@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Created by 11981 on 2016/10/11.
- * 先进先出队列
+ * 脧脠陆酶脧脠鲁枚露脫脕脨
  */
 public class Queue<Item> implements Iterable<Item> {
     private Node<Item> first;
@@ -44,8 +44,8 @@ public class Queue<Item> implements Iterable<Item> {
         last = new Node<Item>();
         last.item = item;
         last.next = null;
-        if (isEmpty()) first = last; //加的这个判断要注意下
-        else           oldlast.next = last;
+        if (isEmpty()) first = last; //录脫碌脛脮芒赂枚脜脨露脧脪陋脳垄脪芒脧脗
+        else    oldlast.next = last;
         N++;
     }
     //removes and returns the item on this queue that was recently add.
