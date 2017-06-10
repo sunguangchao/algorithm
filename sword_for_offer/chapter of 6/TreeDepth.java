@@ -2,7 +2,10 @@
 
 /**
  * Created by 11981 on 2017/5/6.
- * 面试题39：二叉树的深度
+ * 面试题39：
+ * 题目一：二叉树的深度
+ * 思想：使用递归很容易就可以实现
+ *
  */
 public class TreeDepth {
     public static void main(String[] args){
